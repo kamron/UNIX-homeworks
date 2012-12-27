@@ -1,0 +1,70 @@
+#!/bin/sh
+
+###############################################
+#
+#Project:CS172 Homework Assignment #2
+#Filename:homework2
+#Purpose: To save the world!
+#
+#Usage: $/home/froomin/homework2 [option(s)][argument(s)]
+#
+#Date created: October 12, 2011
+#Date last modified: Tomorrow
+#
+#Author: Adrian Perez
+#
+###############################################
+
+#Inifinite Loop!
+while :
+do
+
+# Here is the Menu!
+echo "MENU!\n"
+echo "d. Current date and time.\n"
+echo "p. Name of the current working directory.\n"
+echo "l. Long listing of the current working directory.\n"
+echo "c. Change directory.\n"
+echo "q. Exit.\n"
+
+read COMMAND
+
+case $COMMAND in
+        d | D )
+                echo "The date is "     `date +"%A, %B %d, %Y"`
+                ;;
+        p | P )
+                echo "You are currently in:"
+                IFS=/
+                set root `pwd`
+                while [ $# -gt 2 ];
+                do
+                    shift
+                done
+                if [ $# = 1 ]
+                then
+                echo `banner ROOT`
+                else
+                echo $2
+                fi
+                IFS=
+                ;;
+        l | L )
+                ls -l
+                ;;
+        c | C )
+                echo "Where would you like to change to? (absolute paths only please!)"
+                read CHANGEDIR
+                cd $CHANGEDIR
+                echo "Hooray! You are now in:" `pwd`
+                ;;
+        q )
+                echo "Goodbye, I'll miss you!"
+                exit 1
+                ;;
+        * )
+                echo "I'm sorry, I don't quite understand. Try again please?\n"
+                ;;
+esac
+
+done

@@ -1,0 +1,39 @@
+#!/bin/ksh
+
+################################################
+#
+#Project:CS72 Homework Assignment #6
+#Filename:times_table
+#Purpose: Aid those born without the ability to do
+# multiplication.
+#
+#Usage:$/home/f2021/times_table
+#
+#Date created: November 28, 2011
+#Date last modified: November 28, 2011
+#
+#Author: Adrian Perez
+#
+################################################
+
+#No need for a loop!
+
+#Question one:
+echo "What number do you want a times table for? "
+read TABLE
+
+#Question two:
+echo "How many iterations do you require? "
+read ITERATIONS
+
+echo "Your times table is :"
+
+#Here is an index!
+integer count=0
+until(($count == $ITERATIONS))
+do
+        integer product=0
+        count=$count+1
+        product=$count*$TABLE
+        echo "$count x $TABLE = $product"
+done

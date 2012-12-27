@@ -1,0 +1,90 @@
+#!/bin/csh
+
+###############################################
+#
+#Project:CS172 Homework Assignment #3
+#Filename:homework3
+#Purpose: A repurposed version of homework2 which is
+# made to save the world by allowing one to execute simple
+#
+#Usage: $/home/f2021/homework3
+#
+#Date created: October 24, 2011
+#Date last modified: October 31, 2011
+#
+#Author: Adrian Perez
+#
+###############################################
+
+#Inifinite Loop!
+while (1)
+
+# Here is the Menu!
+echo "MENU"
+echo "d. Current date and time."
+echo "p. Name of the current working directory."
+echo "l. Long listing of the current working directory."
+echo "s. The sum of up to five (5) numbers."
+echo "q. Exit."
+
+# take user input
+set COMMAND = $<
+
+# check the user input against known cases
+switch ($COMMAND)
+        case [dD] :
+        # Could someone please give me the date?
+                echo "The date is "     `date +"%A, %B %d, %Y"`
+                breaksw
+        case [pP] :
+        # Where am I?
+                pwd
+                breaksw
+        case [lL] :
+        # What is here?
+                ls -l
+                breaksw
+        case [sS] :
+        # This is how you add up numbers; no number theory needed!
+                echo "Please enter up to five (5) numbers."
+                echo "One number per line, enter zero (0) if less than 5 numbers."
+                echo "Spaces and non-numbers make this command upset. Please be kind."
+
+                # An array size five filled with zeros!
+                set numbers = ( 0 0 0 0 0 )
+                @ count=1
+                while( $count < 6 )
+                # take user input
+                        @ numbers[$count] = $<
+                # *TECHNICALLY* SJSU Style Guidelines do not allow for `break` statements
+                        if ( $numbers[$count] == 0 ) then
+                                @ count=100
+                        endif
+                        @ count = ( $count + 1 )
+                end
+                # resets index to the inital value; adding during iteration
+                @ count=1
+                # This will be our sum
+                @ sum=0
+                foreach value ($numbers)
+                        @ sum = ($sum + $value)
+                end
+                echo "The sum of the numbers you entered is $sum"
+                echo Complete!
+                breaksw
+        case Q :
+        # This is not how you quit!
+                echo "I'm sorry, I don't quite understand. Try again please?"
+                echo "(hint: try lower-case 'q')"
+                breaksw
+        case q :
+        # This is how you quit!
+                echo "Goodbye, I'll miss you\!"
+                exit 1
+                breaksw
+        default :
+        # This is if you are not following instructions
+                echo "I'm sorry, I don't quite understand. Try again please?"
+                breaksw
+endsw
+end

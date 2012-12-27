@@ -1,0 +1,76 @@
+#!/bin/ksh
+
+###############################################
+#
+#Project:CS172 Homework Assignment #4
+#Filename:homework4
+#Purpose: A repurposed version of homework2 which is made
+# to save the world by allowing one to execute simple commands.
+# Made with the power of Korn (shell)!!
+#
+#Usage: $/home/f2021/homework4
+#
+#Date created: November 14, 2011
+#Date last modified: November 14, 2011
+#
+#Author: Adrian Perez
+#
+###############################################
+
+#Inifinite Loop!
+while :
+do
+
+# Here is the Menu!
+echo "MENU!\n"
+echo "d. Current date and time.\n"
+echo "p. Name of the current working directory.\n"
+echo "l. Long listing of the current working directory.\n"
+echo "s. Give the sum of up to five numbers.\n"
+echo "q. Exit.\n"
+
+# take user input
+read COMMAND
+
+# check the user input against known cases
+case $COMMAND in
+        d | D )
+                echo "The date is "     `date +"%A, %B %d, %Y"`
+                ;;
+        p | P )
+                echo "You are currently in: `pwd`"
+                ;;
+        l | L )
+                ls -l
+                ;;
+        s | S )
+                integer sum[]=0
+                integer count=0
+                echo "This will sum up five (5) numbers! Numbers only please!"
+                until (( ${#sum[*]} == '5'))
+                do
+                        count=$count+1
+                        print -n "Enter 5 (five) numbers [$count of 5]:"
+                        read INTEGER
+                        # the -1 is only to make the print statement look nice
+                        sum[$count-1]=$INTEGER
+                done
+                integer total=0
+                for number in ${sum[*]}
+                do
+                        total=$total+$number
+                done
+                print Them sum of these numbers is: $total!
+                ;;
+        Q )
+                echo "I'm sorry, I don't quite understand. Try again please?\n (hint: try lower-case 'q') \n"
+                ;;
+        q )
+                echo "Goodbye, I'll miss you!"
+                exit 1
+                ;;
+        * )
+                echo "I'm sorry, I don't quite understand. Try again please?\n"
+                ;;
+esac
+done
