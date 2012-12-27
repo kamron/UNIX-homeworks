@@ -1,0 +1,30 @@
+#!/bin/sh
+
+###############################################
+#
+# Project : CS172A Homework Assignment #2
+# Filename : homework2
+# Purpose : Sends an e-mail alert warning about
+#           Friday the 13th.
+#
+# Usage : $ /home/f3025/hw2
+#
+# Date created : February 8, 2012
+# Date last modified : February 13, 2012
+#
+# Author : Adrian Perez
+#
+###############################################
+
+# Check if today is indeed the 13th
+if [ `date +%e` = 13 ]
+then
+        banner Beware of Friday the 13th
+        banner `id`
+        banner `date`
+fi
+
+# The actual crontab is as follows:
+# 0 18 * * 5 /home/f3025/hw2 | mailx -s "Beware!" marty.froomin@sjsu.edu
+# To test it, it was changed to:
+# 20 20 * * 5 /home/f3025/hw2 | mailx -s "Beware!" marty.froomin@sjsu.edu

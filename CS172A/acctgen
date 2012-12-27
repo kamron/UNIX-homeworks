@@ -1,0 +1,41 @@
+#!/bin/ksh
+
+###############################################
+#
+# Project : CS172 Homework Assignment #3
+# Filename : acctgen
+# Purpose : The purpose of this script is to
+#   automate the generation of user accounts.
+#
+# Usage : $ /home/f3025/acctgen [prefix letter(s)] [starting number] [ending number]
+#
+# Date created : March 7, 2012
+# Date last modified : March 12, 2012
+#
+# Author : Adrian Perez
+#
+###############################################
+
+LETTER=$1
+ENCRYPTED_PASSWORD=jYMfVvVfV2b5A
+integer COUNT=$2
+integer END=$3
+
+# Create accounts ranging between the two given end points
+until(($COUNT==$END+1))
+do
+# Append to the passwd file!
+echo "${LETTER}${COUNT}:${ENCRYPTED_PASSWORD}:${COUNT}:10:Anonymous Drone ${LETTER}${COUNT}:/export/home/${LETTER}${COUNT}:/bin/csh" >> /etc/passwd
+mkdir /export/home/${LETTER}${COUNT}
+
+# Copy the require files!
+cp /etc/skel/local.login /export/home/${LETTER}${COUNT}/.login
+cp /etc/skel/local.cshrc /export/home/${LETTER}${COUNT}/.cshrc
+cp /etc/skel/local.profile /export/home/${LETTER}${COUNT}/.profile
+
+# Revert ownership to the rightful owner!
+chown -R ${COUNT}:10 /export/home/${LETTER}${COUNT}
+COUNT=$COUNT+1
+done
+#Sync with the shadow file!
+pwconv
